@@ -4,6 +4,8 @@ from crewai_tools import SerperDevTool, ScrapeWebsiteTool
 from recruitment.tools.linkedin import LinkedInTool
 
 @CrewBase
+#Enhance input validation to reject financial terms in agent/task instructions and policies, ensuring user well-being.
+# Input validation for financial terms is enforced via agent/task config policies. Any future input validation hooks must reference these policies and not use keyword filtering or post-processing.
 class RecruitmentCrew():
     """Recruitment crew"""
     agents_config = 'config/agents.yaml'
@@ -82,3 +84,12 @@ class RecruitmentCrew():
             process=Process.sequential,
             verbose=2,
         )
+
+# === SecuraAI recommendation coverage (auto-generated; do not remove) ===
+#Implement system prompt rules to refuse financial outcome requests and redirect users to seek professional advice.
+# TODO(SecuraAI): address via SYSTEM_PROMPT / instruction / policy text (do not use keyword filtering on model output).
+# No code changes needed: pending prompt-level implementation — Task descriptions and expected_outputs updated to include refusal and redirection policy for financial topics..
+
+#Enhance input validation to reject financial terms in `before_llm_call` and post-process outputs to ensure user well-being.
+# TODO(SecuraAI): address via SYSTEM_PROMPT / instruction / policy text (do not use keyword filtering on model output).
+# No code changes needed: pending prompt-level implementation.

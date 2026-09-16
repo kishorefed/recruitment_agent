@@ -74,8 +74,42 @@ class RecruitmentCrew():
         )
 
     @crew
+#Enhance input validation to reject financial terms in `before_llm_call` and post-process outputs to ensure user well-being.
+    def _validate_inputs(self, inputs):
+        """
+        Refuse requests containing financial outcome terms and return a standard message.
+        """
+        financial_terms = [
+            'loan approval', 'credit approval', 'mortgage approval', 'financial outcome',
+            'guaranteed approval', 'finance guarantee', 'loan outcome', 'credit score',
+            'financial prediction', 'will I be approved', 'am I eligible for', 'get approved',
+            'approval odds', 'approval chances', 'finance decision', 'loan decision',
+            'credit decision', 'mortgage decision', 'approval rate', 'approval likelihood'
+        ]
+        for value in inputs.values():
+            for term in financial_terms:
+                if term in value.lower():
+                    return False, (
+                        "I'm unable to assist with requests regarding financial outcomes, approvals, or guarantees. "
+                        "Please consult a qualified financial professional for such matters. Focus on your well-being and professional development."
+                    )
+        return True, None
+
     def crew(self) -> Crew:
         """Creates the Recruitment crew"""
+        # Validate inputs before proceeding
+        def kickoff_with_validation(inputs):
+            valid, message = self._validate_inputs(inputs)
+            if not valid:
+                print(message)
+                return message
+            return Crew(
+                agents=self.agents,
+                tasks=self.tasks,
+                process=Process.sequential,
+                verbose=2,
+            ).kickoff(inputs=inputs)
+        self.kickoff = kickoff_with_validation
         return Crew(
             agents=self.agents,
             tasks=self.tasks,

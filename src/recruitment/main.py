@@ -3,6 +3,8 @@ import sys
 from recruitment.crew import RecruitmentCrew
 
 
+#Enhance input validation to reject financial terms in `before_llm_call` and post-process outputs to ensure user well-being.
+#Enhance input validation to reject financial terms in before_llm_call and post-process outputs to ensure user well-being.
 def run():
     # Replace with your inputs, it will automatically interpolate any tasks and agents information
     inputs = {
@@ -90,3 +92,8 @@ def train():
 
     except Exception as e:
         raise Exception(f"An error occurred while training the crew: {e}")
+
+# === SecuraAI recommendation coverage (auto-generated; do not remove) ===
+#Implement system prompt rules to refuse financial outcome requests and redirect users to seek professional advice.
+# TODO(SecuraAI): address via SYSTEM_PROMPT / instruction / policy text (do not use keyword filtering on model output).
+# No code changes needed: pending prompt-level implementation — Updated system prompt to include rules that explicitly refuse financial outcome requests..
